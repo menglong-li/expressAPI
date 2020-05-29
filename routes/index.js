@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     console.log(data);
     res.render('index', { title: JSON.stringify(data) });
   })
-  
+
 });
 
 module.exports = router;

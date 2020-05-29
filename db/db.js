@@ -1,35 +1,18 @@
-class dbc {
-    static getInstance() {
-        if (!dbc.instance) {
-            dbc.instance = new dbc();
-        }
-        return dbc.instance;
-    }
+var dbc = require('./config');
 
-    constructor() {
-        this.mysql = require('mysql');
-        this.connection = this.mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '116938310',
-            database: 'vue'
-        });
-        this.connection.connect();
-    }
-
-    query(sql) {
-        return new Promise((resolve,reject) => {
-            this.connection.query(sql,(error,result,fields) => {
-                if(error) {
-                    console.log(error.message);
-                    reject(error.message);
-                }else {
-                    this.connection.end();
-                    resolve(result);
+module.exports = {
+    query: function (sql,callback) {
+        dbc.getConnection(function(err, connection) {
+            connection.query(sql, function(err, result) {
+                if(err) {
+                    callback(err);
+                    // callback('error');
+                }else{
+                    callback(result);
                 }
-            })
-        })
+                // 释放连接
+                connection.release();
+            });
+        });
     }
 }
-
-module.exports = dbc.getInstance();
