@@ -12,6 +12,8 @@
     "express": "^4.17.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
+    "md5-node": "^1.0.1",
+    "moment": "^2.26.0",
     "morgan": "~1.9.1",
     "mysql": "^2.17.1",
     "node-mysql-promise": "0.0.7",
