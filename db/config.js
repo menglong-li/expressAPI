@@ -5,6 +5,7 @@ var mysql = Mysql.createConnection({
     password: '116938310',           //密码
     port : '3306',              //端口
     database: 'vue',           //库名
+    timezone: "08:00",          //解决时间带T及8小时问题
     multipleStatements:true     //允许执行多条语句
 });
 module.exports = mysql;
