@@ -12,7 +12,7 @@ router.use((req,res,next) => {
         const token = req.headers['authorization'].split(' ').pop();
         jwt.verify(token,'Bearer ',(err,data) => {
             if(err) {
-                res.send('请求失败：未验证的Token',403);
+                res.send('请求失败：未验证的Token',401);
             }else {
                 next();
             }
