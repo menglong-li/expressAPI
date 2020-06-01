@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var interceptors = require('./routes/interceptors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 /****************** 路由 ******************************/
+app.use(interceptors);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api',adminRouter);
