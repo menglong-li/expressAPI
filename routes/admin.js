@@ -5,10 +5,11 @@ var custom = require('../controllers/custom');
 var jwt = require('jsonwebtoken');
 /* GET users listing. */
 
-router.get('/login',(req,res,next) => {
-    let {username,pass} = req.query;
+router.post('/login',(req,res,next) => {
+    console.log(req.body)
+    let {username,pass} = req.body;
     if(custom.isEmpty(username) || custom.isEmpty(pass)) res.send('用户名或密码错误',500);
-    controller.login(req.query).then(data => {
+    controller.login(req.body).then(data => {
         if(data.id > 0){
             let tokenInfo = {
                 iss: '鹅这个彪崽',//签发人
