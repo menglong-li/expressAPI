@@ -8,10 +8,28 @@ module.exports = {
      * @param params 用户名及密码
      * @returns {Promise|*}
      */
-    login: function (params) {
+    login: async function (params) {
         let {username,pass} = params;
         pass = md5(pass);
-        return mysql.table('admin').where({username:username,password:pass}).find();
+        let retu = await mysql.table('admin').where({username:username,password:pass}).find().then(result => {
+            //如果用户存在，标记登录成功，替换上次登录时间，并更新当前登录时间
+            result.lasttime = result.signtime;
+            result.signtime = moment().format('YYYY-MM-DD HH:mm:ss');
+            return mysql.table('admin').where({id:result.id}).update(result).then(num => {
+                if(num > 0) {
+                    return result;
+                }else {
+                    return '';
+                }
+            });
+        });
+        return new Promise((resolve,reject) => {
+            if(retu == '') {
+                reject('');
+            }else {
+                resolve(retu);
+            }
+        });
     },
     /**
      * 新增数据，同时验证用户名是否存在
