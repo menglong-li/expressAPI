@@ -19,6 +19,7 @@ app.use(cors({
     methods:['GET','POST','PUT','DELETE','OPTIONS'],
     alloweHeaders:['X-Requested-With','Content-Type','Authorization'],
     credentials: true,//允许携带cookies
+    maxAge:86400,//限制options24小时内缓存
 }))
 
 app.all('*', function (req, res, next) {
