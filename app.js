@@ -3,22 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 var interceptors = require('./routes/interceptors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+var websetRouter = require('./routes/webset');
 
 var app = express();
 
 //设置允许跨域访问该服务.
+app.use(cors({
+    origin:['http://localhost:8080','http://192.168.1.100:8080'],
+    methods:['GET','POST','PUT','DELETE','OPTIONS'],
+    alloweHeaders:['X-Requested-With','Content-Type','Authorization'],
+    credentials: true,//允许携带cookies
+}))
+
 app.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-  //Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Content-Type', 'application/json;charset=utf-8');
   if(req.method == 'OPTIONS') {
     res.sendStatus(200);
   } else
@@ -38,9 +41,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /****************** 路由 ******************************/
 app.use(interceptors);
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api',adminRouter);
+app.use('/api/admin',adminRouter);
+app.use('/api/webset',websetRouter);
 /****************** 路由 ******************************/
 
 
@@ -60,5 +64,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(3000,'192.168.1.100')
 
 module.exports = app;
