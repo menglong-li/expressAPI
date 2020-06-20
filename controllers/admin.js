@@ -10,6 +10,7 @@ module.exports = {
      */
     login: function (params) {
         let {username,pass} = params;
+        pass = md5(pass);
         return mysql.table('admin').where({username:username,password:pass}).find();
     },
     /**
@@ -58,8 +59,21 @@ module.exports = {
     getView: id => {
         return mysql.table('admin').where({id:id}).find();
     },
-    getlist: function(req,res,next) {
-        let params = req.query;
-        return mysql.table('admin').limit(params.size * (params.current - 1),params.size * params.current).select()
+    getlist: async (params) => {
+        let {current,size,username} = params;
+        let where = '';
+        if(username) {
+            where = {username:['LIKE',"%"+ username +"%"]};
+        }
+        let result = {
+            list:[],
+            total: 0
+        }
+        result.list = await mysql.table('admin').where(where).page(current,size).select();
+        result.total = await mysql.table('admin').where(where).count();
+        return result;
+    },
+    delete: id=> {
+        return mysql.table('admin').where({id:['IN',id]}).delete();
     }
 }
