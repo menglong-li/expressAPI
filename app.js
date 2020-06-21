@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var websetRouter = require('./routes/webset');
+let adminlogsRouter = require('./routes/adminlogs');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/api', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/admin',adminRouter);
 app.use('/api/webset',websetRouter);
+app.use('/api/adminlogs',adminlogsRouter);
 /****************** 路由 ******************************/
 
 
