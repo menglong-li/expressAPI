@@ -3,6 +3,7 @@ var router = express.Router();
 var controller = require('../controllers/admin');
 var custom = require('../controllers/custom');
 var jwt = require('jsonwebtoken');
+let logs = require('../controllers/adminlogs');
 
 /**
  * 后台登录
@@ -17,12 +18,11 @@ router.post('/login',(req,res,next) => {
                 id:data.id,
                 username:data.username
             }
-            let token = jwt.sign(tokenInfo,'Bearer ',{expiresIn:3600},(err,token) => {
-                if(err) throw err;
-                res.json({
-                    token:'Bearer ' + token
-                },200)
-            });
+            let token = jwt.sign(tokenInfo,"limenglong",{expiresIn:3600});
+            logs.login(data.username);
+            res.json({
+                token: token
+            },200);
         }else {
             res.send('用户名或密码错误',403);
         }

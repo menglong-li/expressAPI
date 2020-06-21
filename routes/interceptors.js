@@ -13,7 +13,8 @@ router.use((req,res,next) => {
             res.send('Error:token does not exist',401)
         }else {
             const token = req.headers['authorization'].split(' ').pop();
-            jwt.verify(token,'Bearer ',(err,data) => {
+            console.log(token);
+            jwt.verify(token,"limenglong",(err,data) => {
                 if(err) {
                     res.send('请求失败：未验证的Token',401);
                 }else {
