@@ -9,7 +9,7 @@ router.get('/',(req,res,next) => {
 });
 
 router.put('/put',(req,res,next) => {
-    controller.put(req.body).then(result=> {
+        controller.put(req,res,next).then(result=> {
         if(result > 0) {
             res.send('操作成功');
         }else {
