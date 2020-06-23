@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+global.admin = '';//注册全局变量，存储管理员账号
 
 var interceptors = require('./routes/interceptors');
 var indexRouter = require('./routes/index');
@@ -11,6 +12,7 @@ var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var websetRouter = require('./routes/webset');
 let adminlogsRouter = require('./routes/adminlogs');
+
 
 var app = express();
 
@@ -44,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /****************** 路由 ******************************/
 app.use(interceptors);
 app.use('/api', indexRouter);
-app.use('/users', usersRouter);
+app.use(usersRouter);
 app.use('/api/admin',adminRouter);
 app.use('/api/webset',websetRouter);
 app.use('/api/adminlogs',adminlogsRouter);
