@@ -1,6 +1,7 @@
+let express = require('express')
+let router = express.Router()
 let mysql = require('../db/config')
 let date = require('moment');
-var jwt = require('jsonwebtoken');
 
 module.exports = {
     getList: async (params)=> {
@@ -21,14 +22,11 @@ module.exports = {
         result.total = await mysql.table('adminlogs').where(where).count();
         return result;
     },
-    inlogs: (req,logs) => {
-        const token = req.headers['authorization'].split(' ').pop();
-        jwt.verify(token,'limenglong',(err,data) => {
-            mysql.table('adminlogs').add({admin:data.username,logs:logs,times:date().format('YYYY-MM-DD HH:mm:ss')});
-        },"limenglong")
-    },
-    login: (admin)=> {
-        mysql.table('adminlogs').add({admin:admin,logs:'登录',times:date().format('YYYY-MM-DD HH:mm:ss')});
+    inlogs: (logs) => {
+        console.log(global.admin);
+        console.log(logs);
+        console.log(date().format('YYYY-MM-DD HH:mm:ss'))
+        mysql.table('adminlogs').add({admin:global.admin,logs:logs,times:date().format('YYYY-MM-DD HH:mm:ss')});
     }
 }
 
