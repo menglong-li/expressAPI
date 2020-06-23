@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var jwt = require('jsonwebtoken');
-
+let jwt = require('jsonwebtoken')
 /*
  * 拦截器，验证token
  */
@@ -13,11 +12,11 @@ router.use((req,res,next) => {
             res.send('Error:token does not exist',401)
         }else {
             const token = req.headers['authorization'].split(' ').pop();
-            console.log(token);
             jwt.verify(token,"limenglong",(err,data) => {
                 if(err) {
                     res.send('请求失败：未验证的Token',401);
                 }else {
+                    global.admin = data.username;
                     next();
                 }
             })
