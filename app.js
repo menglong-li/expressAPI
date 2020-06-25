@@ -4,17 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-global.admin = '';//注册全局变量，存储管理员账号
-
-var interceptors = require('./routes/interceptors');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var adminRouter = require('./routes/admin');
-var websetRouter = require('./routes/webset');
-let adminlogsRouter = require('./routes/adminlogs');
-
 
 var app = express();
+global.admin = '';//注册全局变量，存储管理员账号
 
 //设置允许跨域访问该服务.
 app.use(cors({
@@ -31,7 +23,6 @@ app.all('*', function (req, res, next) {
   } else
   next();
 });
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -43,14 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-/****************** 路由 ******************************/
-app.use(interceptors);
-app.use('/api', indexRouter);
-app.use(usersRouter);
-app.use('/api/admin',adminRouter);
-app.use('/api/webset',websetRouter);
-app.use('/api/adminlogs',adminlogsRouter);
-/****************** 路由 ******************************/
+var route = require('./routes/index')(app);//注册路由,所在行位置不能错
 
 
 

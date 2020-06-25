@@ -1,35 +1,19 @@
-var express = require('express');
-var router = express.Router();
-var controller = require('../controllers/admin');
-var custom = require('../controllers/custom');
-var jwt = require('jsonwebtoken');
-let logs = require('../controllers/adminlogs');
+var interceptors = require('./interceptors');
+var usersRouter = require('./users');
+var adminRouter = require('./admin');
+var websetRouter = require('./webset');
+let adminlogsRouter = require('./adminlogs');
+let producttype = require('./producttype');
 
-/**
- * 后台登录
- */
-router.post('/login',(req,res,next) => {
-    let {username,pass} = req.body;
-    if(custom.isEmpty(username) || custom.isEmpty(pass)) res.send('用户名或密码错误',500);
-    controller.login(req.body).then(data => {
-        if(data.id > 0){
-            let tokenInfo = {
-                iss: '鹅这个彪崽',//签发人
-                id:data.id,
-                username:data.username
-            }
-            let token = jwt.sign(tokenInfo,"limenglong",{expiresIn:3600});
-            global.admin = data.username;
-            logs.inlogs('登录');
-            res.json({
-                token: token
-            },200);
-        }else {
-            res.send('用户名或密码错误',403);
-        }
-    }).catch(err => {
-        res.send('用户名或密码错误',403);
-    })
-})
 
-module.exports = router;
+
+module.exports = function (app) {
+    /****************** 路由 ******************************/
+    app.use(interceptors);
+    app.use(usersRouter);
+    app.use(adminRouter);
+    app.use('/api/webset',websetRouter);
+    app.use('/api/adminlogs',adminlogsRouter);
+    app.use(producttype);
+    /****************** 路由 ******************************/
+};
