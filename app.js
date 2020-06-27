@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-var route = require('./routes/index')(app);//注册路由,所在行位置不能错
+var route = require('./routes/router')(app);//注册路由,所在行位置不能错
 
 
 
