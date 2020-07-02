@@ -39,7 +39,19 @@ module.exports = {
             }
         });
     },
-    delete: (req,res) => {
+    delete: async (req,res) => {
         //如果包含子级类别，提示请先删除子级类别
+        let {id} = req.query;
+        console.log(id)
+        let count = await mysql.table('producttype').where({pid:id}).count();
+        if(count > 0) {
+            res.send('请先删除子级类别',403);
+        }else {
+            mysql.table('producttype').where({id: id}).delete().then(result => {
+                res.send('ok');
+            }).catch(err => {
+                res.send(err,403);
+            })
+        }
     }
 }
