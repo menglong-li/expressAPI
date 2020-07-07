@@ -4,7 +4,7 @@ var adminRouter = require('./admin');
 var websetRouter = require('./webset');
 let adminlogsRouter = require('./adminlogs');
 let producttype = require('./producttype');
-
+let product = require('./product')
 
 
 module.exports = function (app) {
@@ -15,5 +15,6 @@ module.exports = function (app) {
     app.use('/api/webset',websetRouter);
     app.use('/api/adminlogs',adminlogsRouter);
     app.use(producttype);
+    app.use(product);
     /****************** 路由 ******************************/
 };
