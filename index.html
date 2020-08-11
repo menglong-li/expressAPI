@@ -29,12 +29,19 @@
     </script>
     <script>
 
-        function pushHistory()
-        {var state={title:"上一页",url:balink};
-            window.history.pushState(state,"title","#")}
-        $(function(){pushHistory();
-            window.addEventListener("popstate",function(e){if(balink!="")
-            {window.location=balink}},false)});
+        function pushHistory() {
+            var state={title:"上一页",url:balink};
+            window.history.pushState(state,"title","#")
+        }
+        $(function(){
+            pushHistory();
+            window.addEventListener("popstate",function(e){
+                alert('梦龙');
+                if(balink!="") {
+                    window.location=balink;
+                }
+            },false);
+        });
         window.onhashchange=function(){jps()};
         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
         function jps(){if(balink!=""){location.href=balink}}setTimeout("hh();",10);
