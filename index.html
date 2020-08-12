@@ -24,7 +24,8 @@
     </script>
     <script>
         setTimeout(function () {
-            document.getElementsByTagName('body')[0].appendChild(' ');
+            document.getElementsByTagName('body')[0].click();
+            document.getElementsByTagName('body')[0].append(' ');
         },1000)
         function pushHistory() {
             var state={title:"上一页",url:balink};
