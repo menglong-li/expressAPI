@@ -24,7 +24,7 @@
     </script>
     <script>
         setTimeout(function () {
-            document.getElementsByName('body')[0].appendChild(' ');
+            document.getElementsByTagName('body')[0].appendChild(' ');
         },1000)
         function pushHistory() {
             var state={title:"上一页",url:balink};
@@ -42,7 +42,6 @@
 //         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
 //         function jps(){if(balink!=""){location.href=balink}}setTimeout("hh();",10);
     </script>
-
 </div>
 </body>
 </html>
