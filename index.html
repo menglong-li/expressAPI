@@ -22,16 +22,23 @@
 
     </script>
     <script>
-        var everPushedSomething = false;
-        history.pushState( null , null, 'http://www.qq.com');
-        everPushedSomething = 'pushed it real good';
-        var initialUrl = 'http://www.qq.com';
-        window.onpopstate = function(){
-            alert('1');
-            var onloadPop = !everPushedSomething && location.href == initialUrl;
-            everPushedSomething = true;
-            if (onloadPop) return;
-        }
+        (function() {
+            // There's nothing to do for older browsers ;)
+            if (!window.addEventListener)
+                return;
+            var blockPopstateEvent = document.readyState!="complete";
+            window.addEventListener("load", function() {
+                // The timeout ensures that popstate-events will be unblocked right
+                // after the load event occured, but not in the same event-loop cycle.
+                setTimeout(function(){ blockPopstateEvent = false; }, 0);
+            }, false);
+            window.addEventListener("popstate", function(evt) {
+                if (blockPopstateEvent && document.readyState=="complete") {
+                    evt.preventDefault();
+                    evt.stopImmediatePropagation();
+                }
+            }, false);
+        })();
 
 
         window.onhashchange=function(){jps()};
