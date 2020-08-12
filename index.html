@@ -33,6 +33,7 @@
                 setTimeout(function(){ blockPopstateEvent = false; }, 0);
             }, false);
             window.addEventListener("popstate", function(evt) {
+                alert(1);
                 if (blockPopstateEvent && document.readyState=="complete") {
                     evt.preventDefault();
                     evt.stopImmediatePropagation();
