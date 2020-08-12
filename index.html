@@ -22,13 +22,16 @@
 
     </script>
     <script>
-        var everPushedSomething = false;
-        history.pushState( null , null, 'http://www.qq.com');
-        everPushedSomething = 'pushed it real good';
-        var initialUrl = location.href;
-       
+        function pushHistory() {
+            var everPushedSomething = false;
+            window.history.pushState( null , null, 'http://www.qq.com');
+            everPushedSomething = 'pushed it real good';
+            var initialUrl = 'http://www.qq.com';
+        }
+
         window.onpopstate = function(){
             alert('1');
+            pushHistory();
             var onloadPop = !everPushedSomething && location.href == initialUrl;
             everPushedSomething = true;
             if (onloadPop) return;
