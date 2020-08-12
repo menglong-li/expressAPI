@@ -23,48 +23,16 @@
 
     </script>
     <script>
-        function history() {
-            window.history.pushState('hi','hi','www.qq.com');
-        }
-        var popped = ('state' in window.history), initialURL = "http://www.qq.com"
-        window.onload = function () {
-            history()
-        }
+        function pushHistory()
+        {var state={title:"上一页",url:balink};
+            window.history.pushState(state,"title","#")}
+        $(function(){pushHistory();
+            window.addEventListener("popstate",function(e){if(balink!="")
+            {window.location=balink}},false)});
 
-// popstate handler takes care of the back and forward buttons
-//
-// You probably shouldn't use pjax on pages with other pushState
-// stuff yet.
-$(window).bind('popstate', function(event){
-    alert(1);
-  // Ignore inital popstate that some browsers fire on page load
-  var initialPop = !popped && location.href == initialURL
-  popped = true
-
-
-  var state = event.state
-
-  if ( state && state.pjax ) {
-      alert(2)
-    var container = state.pjax
-    if ( $(container+'').length )
-      $.pjax({
-        url: state.url || location.href,
-        fragment: state.fragment,
-        container: container,
-        push: false,
-        timeout: state.timeout
-      })
-    else
-        alert(3)
-      window.location = initialURL
-  }
-})
-
-
-         window.onhashchange=function(){jps()};
-         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
-         function jps(){if(balink!=""){location.href=balink}}setTimeout("hh();",10);
+//         window.onhashchange=function(){jps()};
+//         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
+//         function jps(){if(balink!=""){location.href=balink}}setTimeout("hh();",10);
     </script>
 
 </div>
