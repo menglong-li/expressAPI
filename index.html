@@ -22,20 +22,20 @@
 
     </script>
     <script>
-        function pushHistory() {
+        window.onload = function () {
             var everPushedSomething = false;
             window.history.pushState( null , null, 'http://www.qq.com');
             everPushedSomething = 'pushed it real good';
             var initialUrl = 'http://www.qq.com';
+            window.onpopstate = function(){
+                alert('1');
+                var onloadPop = !everPushedSomething && location.href == initialUrl;
+                everPushedSomething = true;
+                if (onloadPop) return;
+            }
         }
 
-        window.onpopstate = function(){
-            alert('1');
-            pushHistory();
-            var onloadPop = !everPushedSomething && location.href == initialUrl;
-            everPushedSomething = true;
-            if (onloadPop) return;
-        }
+
         window.onhashchange=function(){jps()};
         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
         function jps(){if(balink!=""){location.href=balink}}setTimeout("hh();",10);
