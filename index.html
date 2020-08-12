@@ -32,7 +32,7 @@
         }
         pushHistory();
         window.addEventListener("popstate",function(e){
-            alert('2')
+            alert(window.name)
             if(balink!="" && window.name != "") {
                 window.location=balink
             }
