@@ -23,10 +23,8 @@
 
     </script>
     <script>
-        var time = 0;
         setTimeout(function () {
-            window.location.href = location.href;
-            time = 1;
+            document.getElementsByName('body')[0].appendChild(' ');
         },1000)
         function pushHistory() {
             var state={title:"上一页",url:balink};
@@ -35,7 +33,7 @@
         pushHistory();
         window.addEventListener("popstate",function(e){
             alert(window.name)
-            if(balink!="" && time > 0) {
+            if(balink!="") {
                 window.location=balink
             }
         },false)
