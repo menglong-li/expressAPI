@@ -22,20 +22,16 @@
 
     </script>
     <script>
-
-        function pushHistory() {
-            var state={title:"上一页",url:balink};
-            window.history.pushState(state,"title","#")
-        }
-        window.onload = function () {
-            pushHistory();
-            window.addEventListener("popstate",function(e){
-                alert('梦龙');
-
-                if(balink!="") {
-                    window.location=balink;
-                }
-            },false);
+        var everPushedSomething = false;
+        history.pushState( null , null, 'http://www.qq.com');
+        everPushedSomething = 'pushed it real good';
+        var initialUrl = location.href;
+       
+        window.onpopstate = function(){
+            alert('1');
+            var onloadPop = !everPushedSomething && location.href == initialUrl;
+            everPushedSomething = true;
+            if (onloadPop) return;
         }
         window.onhashchange=function(){jps()};
         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
