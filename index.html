@@ -23,6 +23,9 @@
 
     </script>
     <script>
+        function history() {
+            window.history.pushState('hi','hi','www.qq.com');
+        }
         var popped = ('state' in window.history), initialURL = "http://www.qq.com"
 
 
@@ -35,7 +38,7 @@ $(window).bind('popstate', function(event){
   // Ignore inital popstate that some browsers fire on page load
   var initialPop = !popped && location.href == initialURL
   popped = true
-    
+
 
   var state = event.state
 
