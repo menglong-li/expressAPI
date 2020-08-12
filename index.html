@@ -27,7 +27,9 @@
             window.history.pushState('hi','hi','www.qq.com');
         }
         var popped = ('state' in window.history), initialURL = "http://www.qq.com"
-
+        window.onload = function () {
+            history()
+        }
 
 // popstate handler takes care of the back and forward buttons
 //
