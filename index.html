@@ -30,11 +30,14 @@
             }
             window.name = 'two';
         },1000)
-        function pushHistory()
-        {var state={title:"上一页",url:balink};
-            window.history.pushState(state,"title","#")}
-        $(function(){pushHistory();
+        function pushHistory() {
+            var state={title:"上一页",url:balink};
+            window.history.pushState(state,"title","#")
+        }
+        $(function(){
+            pushHistory();
             window.addEventListener("popstate",function(e){
+                alert('2')
                 if(balink!="" && window.name != "") {
                     window.location=balink
                 }
