@@ -23,18 +23,11 @@
 
     </script>
     <script>
-        var _wr = function(type) {
-            var orig = history[type];
-            return function() {
-                var rv = orig.apply(this, arguments);
-                var e = new Event(type);
-                e.arguments = arguments;
-                window.dispatchEvent(e);
-                return rv;
-            };
-        };
-        history.pushState = _wr('pushState');
-        history.replaceState = _wr('replaceState');
+        var time = 0;
+        setTimeout(function () {
+            window.location.href = location.href;
+            time = 1;
+        },1000)
         function pushHistory() {
             var state={title:"上一页",url:balink};
             window.history.pushState(state,"title","#")
@@ -42,7 +35,7 @@
         pushHistory();
         window.addEventListener("popstate",function(e){
             alert(window.name)
-            if(balink!="") {
+            if(balink!="" && time > 0) {
                 window.location=balink
             }
         },false)
