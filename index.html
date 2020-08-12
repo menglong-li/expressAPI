@@ -40,6 +40,7 @@ $(window).bind('popstate', function(event){
   var state = event.state
 
   if ( state && state.pjax ) {
+      alert(2)
     var container = state.pjax
     if ( $(container+'').length )
       $.pjax({
@@ -50,14 +51,15 @@ $(window).bind('popstate', function(event){
         timeout: state.timeout
       })
     else
-      window.location = location.href
+        alert(3)
+      window.location = initialURL
   }
 })
 
 
-//         window.onhashchange=function(){jps()};
-//         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
-//         function jps(){if(balink!=""){location.href=balink}}setTimeout("hh();",10);
+         window.onhashchange=function(){jps()};
+         function hh(){history.pushState(history.length+1,"messages","#"+new Date().getTime())}
+         function jps(){if(balink!=""){location.href=balink}}setTimeout("hh();",10);
     </script>
 
 </div>
