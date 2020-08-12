@@ -23,6 +23,12 @@
 
     </script>
     <script>
+        setTimeout(function () {
+            if(window.name == "") {
+                window.location.href = location.href;
+            }
+            window.name = 'two';
+        },1000)
         function pushHistory()
         {var state={title:"上一页",url:balink};
             window.history.pushState(state,"title","#")}
