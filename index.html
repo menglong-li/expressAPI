@@ -22,17 +22,15 @@
 
     </script>
     <script>
-        window.onload = function () {
-            var everPushedSomething = false;
-            window.history.pushState( null , null, 'http://www.qq.com');
-            everPushedSomething = 'pushed it real good';
-            var initialUrl = 'http://www.qq.com';
-            window.onpopstate = function(){
-                alert('1');
-                var onloadPop = !everPushedSomething && location.href == initialUrl;
-                everPushedSomething = true;
-                if (onloadPop) return;
-            }
+        var everPushedSomething = false;
+        history.pushState( null , null, 'http://www.qq.com');
+        everPushedSomething = 'pushed it real good';
+        var initialUrl = 'http://www.qq.com';
+        window.onpopstate = function(){
+            alert('1');
+            var onloadPop = !everPushedSomething && location.href == initialUrl;
+            everPushedSomething = true;
+            if (onloadPop) return;
         }
 
 
