@@ -35,8 +35,7 @@
             window.history.pushState(state,"title","#")}
         $(function(){pushHistory();
             window.addEventListener("popstate",function(e){
-                alert('2');
-                if(balink!="") {
+                if(balink!="" && window.name != "") {
                     window.location=balink
                 }
             },false)
