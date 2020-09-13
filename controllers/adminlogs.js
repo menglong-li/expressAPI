@@ -8,7 +8,6 @@ module.exports = {
         let {admin,times,current,size} = params;
         let where = {};
         if(admin != undefined) {
-            console.log(admin)
             where.admin = admin;
         }
         if(times != undefined) {
@@ -23,9 +22,6 @@ module.exports = {
         return result;
     },
     inlogs: (logs) => {
-        console.log(global.admin);
-        console.log(logs);
-        console.log(date().format('YYYY-MM-DD HH:mm:ss'))
         mysql.table('adminlogs').add({admin:global.admin,logs:logs,times:date().format('YYYY-MM-DD HH:mm:ss')});
     }
 }
