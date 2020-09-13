@@ -20,7 +20,6 @@ module.exports = {
     ice: (req,res,next) => {
         let {id,username} = req.body;
         mysql.table('users').where({id:id}).update({state:1,icetime: date().format('YYYY-MM-DD HH:mm:ss')}).then(result=> {
-            console.log(result)
             if(result > 0) {
                 logs.inlogs('冻结会员' + username);
                 res.send('ok');
