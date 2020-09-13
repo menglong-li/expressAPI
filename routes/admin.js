@@ -19,7 +19,7 @@ router.post('/api/Login',(req,res,next) => {
                 id:data.id,
                 username:data.username
             }
-            let token = jwt.sign(tokenInfo,"limenglong",{expiresIn:3600});
+            let token = jwt.sign(tokenInfo,"limenglong",{expiresIn:36000});
             global.admin = data.username;
             logs.inlogs('登录');
             res.json({
