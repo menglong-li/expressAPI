@@ -1,6 +1,7 @@
 let multer = require('multer');//文件上传
 let multerObj = multer({dest:'./uploads'});
-
+const fs = require('fs');
+var pathReq = require('path');
 let path = '';
 
 //设置保存规则
@@ -12,8 +13,9 @@ var storage = multer.diskStorage({
 
     //filename：设置文件保存的文件名
     filename: function(req, file, cb) {
-        let fileFormat = (file.originalname).split(".");
-        cb(null, Date.now() + "." + fileFormat[fileFormat.length -1]);
+        cb(null, deep('../uploads/photo/', file.originalname));
+        //let fileFormat = (file.originalname).split(".");
+        // cb(null, Date.now() + "." + fileFormat[fileFormat.length -1]);//文件重命名
     }
 })
 
@@ -25,7 +27,7 @@ var imageFilter = function(req, file, cb){
         path = 'photo';
         cb(null, true)
     }else{
-        cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE", file), false)
+        cb(new multer.rror("LIMIT_UNEXPECTED_FILE", file), false)
     }
 }
 
@@ -64,6 +66,25 @@ let zipUploader = multer({
 let Uploader = {
     img: imageUploader,
     zip: zipUploader
-}
+};
+
+/**
+ * 自定义，判断文件名是否存在
+ * @param dir 路径
+ * @param name 文件名
+ */
+function deep(dir,name) {
+    console.log()
+    const arr = fs.readdirSync(pathReq.join(__dirname, dir));
+    arr.forEach(item => {
+        if(item == name) {
+            let end = name.lastIndexOf('.');
+            let tempName = name.substring(0,end);
+            let ext = name.substring(end,name.length);
+            name = tempName +'_' + Date.now() + ext;
+        }
+    });
+    return name;
+};
 
 module.exports = Uploader;

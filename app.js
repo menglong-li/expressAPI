@@ -11,7 +11,7 @@ global.admin = '';//注册全局变量，存储管理员账号
 
 //设置允许跨域访问该服务.
 app.use(cors({
-    origin:['http://localhost:8080','http://192.168.1.100:8080'],
+    origin:['http://localhost:8080','http://192.168.1.102:8080'],
     methods:['GET','POST','PUT','DELETE','OPTIONS'],
     alloweHeaders:['X-Requested-With','Content-Type','Authorization'],
     credentials: true,//允许携带cookies
@@ -33,14 +33,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'upload')));//上传图片保存路径
+app.use('/uploads/',express.static(path.join(__dirname, 'uploads')));//上传图片保存路径
 
 var route = require('./routes/router')(app);//注册路由,所在行位置不能错
 
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(err,req, res, next) {
+    console.log(err)
   next(createError(404));
 });
 
