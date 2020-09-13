@@ -7,7 +7,8 @@ let jwt = require('jsonwebtoken')
 router.use((req,res,next) => {
     if(req.url.split('?')[0] == '/api/Login') {
         next(); //登录页面不需要验证token
-    } else {
+    }
+    else {
         if(req.headers['authorization'] == undefined || req.headers['authorization'] == '') {
             res.send('Error:token does not exist',401)
         }else {
