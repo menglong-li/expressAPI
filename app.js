@@ -64,6 +64,6 @@ app.use(function(err, req, res, next) {
     }
 });
 
-app.listen(3000,'192.168.1.102')
+app.listen(3000,'192.168.1.101')
 
 module.exports = app;
