@@ -41,6 +41,7 @@ module.exports = {
     },
     add: (req,res) => {
         let params = req.body;
+        params.photo = JSON.stringify(params.photo);
         params.times = date().format('YYYY-MM-DD HH:mm:ss');
         mysql.table('product').add(params).then(result => {
             logs.inlogs('发布商品：' + params.title);
@@ -50,10 +51,10 @@ module.exports = {
         });
     },
     down:(req,res,next) => {
-        let {id} = req.body;
+        let {id,title} = req.body;
         mysql.table('product').where({id:['in',id]}).update({isSale:0}).then(result=> {
             if(result > 0) {
-                logs.inlogs('下架商品ID=' + id);
+                logs.inlogs('下架商品：' + JSON.stringify(req.body));
                 res.send('ok');
             }else {
                 res.send('操作失败',403);
@@ -61,10 +62,11 @@ module.exports = {
         })
     },
     up:(req,res,next) => {
-        let {id} = req.body;
+        let {id,title} = req.body;
+        console.log(req.body);
         mysql.table('product').where({id:['in',id]}).update({isSale:1}).then(result=> {
             if(result > 0) {
-                logs.inlogs('重新上架商品ID=' + id);
+                logs.inlogs('重新上架商品：' + JSON.stringify(req.body));
                 res.send('ok');
             }else {
                 res.send('操作失败',403);
@@ -76,9 +78,9 @@ module.exports = {
         mysql.table('product').where({id:['in',id]}).delete().then(result=> {
             if(result > 0) {
                 if(title.split(',').length > 1) {
-                    logs.inlogs('批量删除商品：' + title);
+                    logs.inlogs('批量删除商品：' + JSON.stringify(req.query));
                 }else {
-                    logs.inlogs('删除商品：' + title);
+                    logs.inlogs('删除商品：' + JSON.stringify(req.body));
                 }
                 res.send('ok');
             }else {
@@ -98,9 +100,10 @@ module.exports = {
     },
     edit: (req,res,next) => {
         let model = req.body;
+        model.photo = JSON.stringify(model.photo);
         mysql.table('product').where({id:model.id}).update(model).then(result=> {
             if(result > 0) {
-                logs.inlogs('编辑商品：' + model.title);
+                logs.inlogs(`编辑商品：{id:${model.id},title:${model.title}`);
                 res.send('ok');
             }else {
                 res.send('操作失败',403);
